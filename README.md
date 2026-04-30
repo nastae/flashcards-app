@@ -12,3 +12,5 @@ You can build Angular and serve it from Spring Boot:
 cd frontend
 npm run build
 ```
+Copy /dist → backend/src/main/resources/static
+Then Spring Boot serves frontend
