@@ -1,0 +1,13 @@
+# Node
+flashcards-ui/node_modules/
+flashcards-ui/dist/
+
+# Angular
+flashcards-ui/.angular/
+
+# Java
+.idea/
+.vscode/
+
+# OS
+.DS_Store
