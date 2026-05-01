@@ -22,3 +22,6 @@ npm run build
 Copy /dist → backend/src/main/resources/static
 Then Spring Boot serves frontend
 
+### Improvements:
+1. Check which dependencies should explicitly to set versions and add to them.
+2. Update repositories, services and controllers to use pages, sortings and filtering (filtering optional).
