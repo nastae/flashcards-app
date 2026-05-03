@@ -1,0 +1,26 @@
+<h2>Create Group</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Group name</label>
+    
+    <input type="text" formControlName="name"/>
+
+    @if (form.get("name")?.invalid && form.get("name")?.touched) {
+        <div style="color: red">
+            Name is required
+        </div>
+    }
+
+    <button type="submit">Submit</button>
+</form>
+
+@if (successMessage) {
+    <p style="color: green">{{ successMessage }}</p>
+}
+
+@if (errorMessage) {
+    <p style="color: red">{{ errorMessage }}</p>
+}
+
+<!-- <p>group-create works!</p> -->
+
