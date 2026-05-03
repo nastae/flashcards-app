@@ -10,6 +10,7 @@ CREATE TABLE groups (
 CREATE TABLE flashcards (
     id BIGSERIAL PRIMARY KEY,
     front_text VARCHAR(255) NOT NULL,
+--    TODO: add validation on controller level
     back_text VARCHAR(500),
     image_url VARCHAR(500),
     deleted BOOLEAN NOT NULL DEFAULT FALSE,
