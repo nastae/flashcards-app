@@ -4,6 +4,7 @@ import com.flashcards.flashcards_service.dto.GroupRequestDto;
 import com.flashcards.flashcards_service.dto.GroupResponseDto;
 import com.flashcards.flashcards_service.service.GroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/groups")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class GroupController {
 

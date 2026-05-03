@@ -1,0 +1,23 @@
+.container {
+    max-width: 400px;
+    margin: 16px auto;
+    padding: 16px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+@media (max-width: 400px) {
+    .container {
+        margin: 0;
+        height: 100vh;
+        border-radius: 0;
+    }
+}
