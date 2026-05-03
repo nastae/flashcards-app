@@ -1,5 +1,6 @@
 package com.flashcards.flashcards_service.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,12 +25,16 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "front_text", nullable = false)
     private String frontText;
 
+    @Column(name = "back_text")
     private String backText;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
     @ManyToOne(fetch = LAZY)

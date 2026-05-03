@@ -1,5 +1,6 @@
 package com.flashcards.flashcards_service.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +27,10 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
     @OneToMany(mappedBy = "group", fetch = LAZY)
