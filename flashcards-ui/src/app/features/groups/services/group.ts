@@ -16,4 +16,8 @@ export class Group {
   createGroup(request: GroupRequest): Observable<GroupResponse> {
     return this.http.post<GroupResponse>(this.apiUrl, request);
   }
+
+  getAll(): Observable<GroupResponse[]> {
+    return this.http.get<GroupResponse[]>(this.apiUrl);
+  }
 }

@@ -28,5 +28,10 @@ Then Spring Boot serves frontend
 3. Add groups creation page (and groups and flashcards ui pages, routings, components and services)
 4. Fix double content when go to /groups/create page
 5. Navigation bar (top or bottom)
-6. Group list page (cards) (Use mat-card) (Tap -> open group)
-7. Floating Action Button (FAB) (<button mat-fab color="primary">+</button>)
++6. Group list page (cards) (Use mat-card) (Tap -> open group)
++7. Floating Action Button (FAB) (<button mat-fab color="primary">+</button>)
+8. Near group list item show flashcards count
+9. Group details page 👉 show flashcards inside
+10. Empty state UX (very important) “No groups yet → CTA button”
+11. Loading state (spinner) 
+12. Toolbar create group button (optional)

@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Your groups</h2>
+
+    @if (loading()) {
+        <p>Loading...</p>
+    } @else {
+        @if (groups().length == 0) {
+            <button mat-raised-button color="primary" (click)="goToCreate()">
+                Create your first group
+            </button>
+        }
+
+        @if (groups().length == 0) {
+            <p>No groups yet. Create your first one 👇</p>
+        }
+
+        <div class="list">
+            @for (group of groups(); track $index) {
+                <mat-card class="group-card" (click)="openGroup($index)">
+                    <mat-card-title>{{ group.name }}</mat-card-title>
+                </mat-card>
+            }
+        </div>
+    }
+    <button mat-fab color="primary" class="fab" (click)="goToCreate()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

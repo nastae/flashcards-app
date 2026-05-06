@@ -1,0 +1,33 @@
+.container {
+    width: 400px;
+    padding: 16px;
+    margin: 0 auto;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.group-card {
+    cursor: pointer;
+    padding: 12px;
+    transition: transform 0.1s ease;
+}
+
+.group-card:active {
+    transform: scale(0.98);
+}
+
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 12px;
+    }
+}

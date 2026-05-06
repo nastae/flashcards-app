@@ -1,10 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GroupCreate } from "./features/groups/pages/group-create/group-create";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GroupCreate],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
