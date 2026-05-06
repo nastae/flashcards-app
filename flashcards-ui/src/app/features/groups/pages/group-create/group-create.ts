@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Group } from '../../services/group';
 import { GroupRequest } from '../../models/group-request';
 import { MatCardModule } from '@angular/material/card';
@@ -44,7 +44,7 @@ export class GroupCreate {
 
   constructor() {}
 
-  submit() {
+  submit(formDirective: any) {
     if (this.form.invalid) {
       return;
     }
@@ -58,6 +58,9 @@ export class GroupCreate {
           duration: 2000
         });
         this.form.reset();
+        // this.form.markAsPristine();
+        // this.form.markAsUntouched();
+        formDirective.resetForm();
         setTimeout(() => {
           this.router.navigate(['groups']);
         }, 500);
