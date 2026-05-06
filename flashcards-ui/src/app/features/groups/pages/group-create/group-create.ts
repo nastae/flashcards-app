@@ -7,6 +7,7 @@ import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/m
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-create',
@@ -32,6 +33,7 @@ export class GroupCreate {
   private fb = inject(FormBuilder);
   private groupService = inject(Group);
   private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
 
   form = this.fb.nonNullable.group({
     name: ['', Validators.required]
@@ -56,6 +58,9 @@ export class GroupCreate {
           duration: 2000
         });
         this.form.reset();
+        setTimeout(() => {
+          this.router.navigate(['groups']);
+        }, 500);
       },
       error: () => {
         // this.errorMessage = 'Failed to create group';
