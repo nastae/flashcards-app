@@ -15,8 +15,8 @@
         }
 
         <div class="list">
-            @for (group of groups(); track $index) {
-                <mat-card class="group-card" (click)="openGroup($index)">
+            @for (group of groups(); track group.id) {
+                <mat-card class="group-card" (click)="openGroup(group.id)">
                     <mat-card-title>{{ group.name }}</mat-card-title>
                 </mat-card>
             }

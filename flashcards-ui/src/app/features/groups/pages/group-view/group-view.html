@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">
+    <span>{{ group()?.name || 'Group' }}</span>
+
+    <span class="spacer"></span>
+
+    <button mat-button (click)="onCreateFlashcard()">
+        <mat-icon>add</mat-icon>
+        Add Flashcard
+    </button>
+
+    <button mat-button (click)="onEditGroup()">
+        <mat-icon>edit</mat-icon>
+        Edit
+    </button>
+
+    <button mat-button (click)="onDeleteGroup()">
+        <mat-icon>delete</mat-icon>
+        Delete
+    </button>
+</mat-toolbar>
+
+<div class="container">
+    @if (loading()) {
+        <p>Loading flashcards...</p>
+    } @else {
+        @if (flashcards.length == 0) {
+            <p>No flashcards yet</p>
+
+            <button mat-raised-button color="primary" (click)="onCreateFlashcard()">
+                Add first flashcard
+            </button>
+        }
+        <div class="list">
+            @for (card of flashcards(); track $index) {
+                <mat-card class="flashcard-card" (click)="openFlashcard($index)">
+                    <mat-card-title>
+                        {{ card.frontText }}
+                    </mat-card-title>
+                </mat-card>
+            }
+        </div>
+    }
+</div>

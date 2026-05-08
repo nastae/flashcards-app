@@ -20,4 +20,12 @@ export class Group {
   getAll(): Observable<GroupResponse[]> {
     return this.http.get<GroupResponse[]>(this.apiUrl);
   }
+
+  getById(id: string): Observable<GroupResponse> {
+    return this.http.get<GroupResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
