@@ -26,12 +26,14 @@ Then Spring Boot serves frontend
 1. Check which dependencies should explicitly to set versions and add to them.
 2. Update repositories, services and controllers to use pages, sortings and filtering (filtering optional).
 3. Add groups creation page (and groups and flashcards ui pages, routings, components and services)
-4. Fix double content when go to /groups/create page
-5. Navigation bar (top or bottom)
++4. Fix double content when go to /groups/create page
+4. Navigation bar (top or bottom)
 +6. Group list page (cards) (Use mat-card) (Tap -> open group)
 +7. Floating Action Button (FAB) (<button mat-fab color="primary">+</button>)
-8. Near group list item show flashcards count
-9. Group details page 👉 show flashcards inside
-10. Empty state UX (very important) “No groups yet → CTA button”
-11. Loading state (spinner) 
-12. Toolbar create group button (optional)
+5. Near group list item show flashcards count
+6. Group details page 👉 show flashcards inside
+7. Empty state UX (very important) “No groups yet → CTA button”
+8. Loading state (spinner) 
+9. Toolbar create group button (optional)
+10. Study navigation: spaced repetition, AI quiz and progress tracking (optional)
+11. Groups navigation: public decks and deck sharing

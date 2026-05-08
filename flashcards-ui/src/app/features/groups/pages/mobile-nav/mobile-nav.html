@@ -1,0 +1,17 @@
+<div class="bottom-nav">
+
+    <button mat-button routerLink="/groups" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>folder</mat-icon>
+        <span>Groups</span>
+    </button>
+
+    <button mat-button routerLink="/study" routerLinkActive="active">
+        <mat-icon>school</mat-icon>
+        <span>Study</span>
+    </button>
+
+    <button mat-button routerLink="/groups/create" routerLinkActive="active">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create</span>
+    </button>
+</div>

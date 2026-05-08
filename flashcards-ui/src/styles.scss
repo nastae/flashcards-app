@@ -37,7 +37,14 @@ body {
   // Reset the user agent margin.
   margin: 0;
   height: 100%;
+
+  // padding-bottom: 64px;
 }
+
+.app-container {
+  padding-bottom: 64px;
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 // TODO: what this code do?
