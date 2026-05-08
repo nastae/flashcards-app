@@ -55,7 +55,9 @@ export class GroupCreate {
         // this.successMessage = 'Group created successfully!';
         // this.errorMessage = '';
         this.snackBar.open('Group created ✅', 'Close', {
-          duration: 2000
+          duration: 2000,
+          verticalPosition: 'bottom',
+          panelClass: ['mobile-snackbar']
         });
         this.form.reset();
         // this.form.markAsPristine();
@@ -69,7 +71,9 @@ export class GroupCreate {
         // this.errorMessage = 'Failed to create group';
         // this.successMessage = '';
         this.snackBar.open('Error creating group ❌', 'Close', {
-          duration: 2000
+          duration: 2000,
+          verticalPosition: 'bottom',
+          panelClass: ['mobile-snackbar']
         });
       }
     })
