@@ -43,3 +43,7 @@ Then Spring Boot serves frontend
 15. Upload file, Cloudinary upload, AI-generated image, Camera upload (maybe not camera upload)
 16. Maybe set mobile screen size redesigning when max-width is 600px
 17. Select and implement differentiation: image-first learning, AI-generated flashcards, spaced repetition, smart review, mobile UX, public decks and AI explanations 
+18. Third menu option make Profile (stats/settings later) (optional) and rethink if needed
+19. Study menu option: When user opens Study: show all groups, show flashcard counts, “Continue learning” (Continue), “Start studying” (Start) and Review
+20. Back button on toolar
+21. Improve group view page UX
