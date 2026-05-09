@@ -24,3 +24,22 @@
 .flashcard-card:hover {
     transform: translateY(-2px);
 }
+
+// .actions {
+//     display: flex;
+//     flex-direction: row;
+//     gap: 8px;
+// }
+
+// TODO: hack to hide mat-menu groupMenu borders 
+// button {
+//     border: none;
+//     cursor: pointer;
+//     background: transparent;
+// }
+
+.fab {
+    position: fixed;
+    bottom: 84px;
+    right: 20px;
+}

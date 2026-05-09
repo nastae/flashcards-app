@@ -1,17 +1,18 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { GroupResponse } from '../../models/group-response';
-import { MatAnchor } from "@angular/material/button";
+import { MatAnchor, MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Group } from '../../services/group';
 import { FlashcardResponse } from '../../../flashcards/models/flashcard-response';
 import { MatCardModule } from "@angular/material/card";
 import { Flashcard } from '../../../flashcards/services/flashcard';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-group-view',
-  imports: [MatToolbarModule, MatAnchor, MatIconModule, MatCardModule],
+  imports: [MatToolbarModule, MatAnchor, MatIconModule, MatCardModule, MatMenuModule, MatButtonModule],
   templateUrl: './group-view.html',
   styleUrl: './group-view.scss',
 })
@@ -78,5 +79,9 @@ export class GroupView implements OnInit {
 
   openFlashcard(id: number) {
     this.router.navigate(['/flashcards', id]);
+  }
+
+  startStudy() {
+    throw new Error('Method not implemented.');
   }
 }
