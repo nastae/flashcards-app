@@ -1,0 +1,40 @@
+<mat-card class="container">
+    <h2>Create Flashcard</h2>
+
+    <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="submit(formDirective)" class="form">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Front text</mat-label>
+            
+            <input matInput formControlName="frontText"/>
+
+            @if (form.get("frontText")?.invalid && form.get("frontText")?.touched) {
+                <mat-error>Front text is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Back text</mat-label>
+
+            <textarea matInput rows="4" formControlName="backText"></textarea>
+
+            @if (form.get("backText")?.invalid && form.get("backText")?.touched) {
+                <mat-error>Back text is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Image URL</mat-label>
+
+            <!-- TODO: how to set that only links would be valid -->
+            <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg"/>
+
+            @if (form.get("imageUrl")?.invalid && form.get("imageUrl")?.touched) {
+                <mat-error>Image URL is required</mat-error>
+            }
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" type="submit" class="full-width">
+            Create Flashcard
+        </button>
+    </form>
+</mat-card>

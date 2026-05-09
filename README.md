@@ -39,4 +39,7 @@ Then Spring Boot serves frontend
 11. Groups navigation: public decks and deck sharing
 12. Set scss style for group create and group edit in one place as it do the same styling (or find other solution) 
 13. create reusable group-form component and reuse for create/edit
-14. When MatSnackBar pop up, it is not able to press menu options
+14. When MatSnackBar pop up, it is not able to press menu options 
+15. Upload file, Cloudinary upload, AI-generated image, Camera upload (maybe not camera upload)
+16. Maybe set mobile screen size redesigning when max-width is 600px
+17. Select and implement differentiation: image-first learning, AI-generated flashcards, spaced repetition, smart review, mobile UX, public decks and AI explanations 

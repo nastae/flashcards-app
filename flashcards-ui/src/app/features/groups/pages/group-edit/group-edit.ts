@@ -73,7 +73,7 @@ export class GroupEdit implements OnInit {
 
         setTimeout(() => {
           this.router.navigate(['/groups', this.groupId]);
-        });
+        }, 500);
       },
       error: (err) => {
         console.log(err);
