@@ -25,6 +25,10 @@ export class Group {
     return this.http.get<GroupResponse>(`${this.apiUrl}/${id}`);
   }
 
+  update(id: string, request: GroupRequest): Observable<GroupResponse> {
+    return this.http.put<GroupResponse>(`${this.apiUrl}/${id}`, request);
+  }
+
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

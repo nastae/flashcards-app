@@ -37,3 +37,6 @@ Then Spring Boot serves frontend
 9. Toolbar create group button (optional)
 10. Study navigation: spaced repetition, AI quiz and progress tracking (optional)
 11. Groups navigation: public decks and deck sharing
+12. Set scss style for group create and group edit in one place as it do the same styling (or find other solution) 
+13. create reusable group-form component and reuse for create/edit
+14. When MatSnackBar pop up, it is not able to press menu options

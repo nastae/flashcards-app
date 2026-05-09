@@ -1,0 +1,19 @@
+<mat-card class="container">
+    <h2>Edit Group</h2>
+
+    <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Group name</mat-label>
+
+            <input matInput formControlName="name" />
+
+            @if (form.get("name")?.invalid && form.get("name")?.touched) {
+                <mat-error>Name is required</mat-error>
+            }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width">
+            Save
+        </button>
+    </form>
+</mat-card>
