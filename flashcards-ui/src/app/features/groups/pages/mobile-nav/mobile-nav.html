@@ -6,7 +6,8 @@
         <span>Groups</span>
     </button>
 
-    <button mat-button routerLink="/study" routerLinkActive="active">
+    <!-- TODO: decide if to show activate button when pressed on futher links leading from it -->
+    <button mat-button routerLink="/study" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon>school</mat-icon>
         <span>Study</span>
     </button>

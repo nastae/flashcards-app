@@ -5,6 +5,7 @@ import { GroupView } from './features/groups/pages/group-view/group-view';
 import { GroupEdit } from './features/groups/pages/group-edit/group-edit';
 import { FlashcardCreate } from './features/flashcards/pages/flashcard-create/flashcard-create';
 import { StudyList } from './features/study/pages/study-list/study-list';
+import { StudySession } from './features/study/pages/study-session/study-session';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path: 'study',
         component: StudyList
+    },
+    {
+        path: 'study/:id',
+        component: StudySession
     }
 ];

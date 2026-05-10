@@ -48,3 +48,5 @@ Then Spring Boot serves frontend
 20. Back button on toolar
 21. Improve group view page UX
 22. move mobile-nav component to separate directory (separate from groups)
+23. On flashcard creation select create with translation to native language (like lithuanian) or add explanation
+24. Fix layouts to be for mobile web application

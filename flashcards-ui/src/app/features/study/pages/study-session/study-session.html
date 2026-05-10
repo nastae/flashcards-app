@@ -1,0 +1,36 @@
+<div class="container">
+
+    @if (currentCard()) {
+        <div class="progress">
+            {{ currentIndex() + 1 }} / {{ cards().length }}
+        </div>
+
+        <mat-card class="study-card">
+            @if (currentCard().imageUrl) {
+                <img [src]="currentCard().imageUrl" alt="Flashcard image" class="card-image">
+            }
+
+            <div class="front-text">{{ currentCard().frontText }}</div>
+
+            <!-- TODO: if statement not needed -->
+            @if (currentCard().backText) {
+                <div class="back-text">{{ currentCard().backText }}</div>
+            }
+        </mat-card>
+
+        <div class="actions">
+            <button mat-stroked-button (click)="previous()">Previous</button>
+
+            <button mat-stroked-button color="warn" (click)="repeatLater()">Repeat later</button>
+
+            <!-- TODO: set button "Correct" or "Next" -->
+            <button mat-stroked-button color="primary" (click)="next()">Next</button>
+        </div>
+    } @else {
+        <p>This group has no flashcards yet</p>
+
+        <div>
+            <button mat-raised-button color="primary" (click)="onCreateFlashcard()">Create first flashcard</button>
+        </div>
+    }
+</div>
