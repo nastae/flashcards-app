@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Start learning</h2>
+
+    @if (loading()) {
+        <p>Loading...</p>
+    } @else {
+        @if (groups().length == 0) {
+            <p>No groups available yet</p>
+        }
+
+        <div class="list">
+            @for (group of groups(); track group.id) {
+                <mat-card class="study-card">
+                    <div class="card-content">
+                        <div>
+                            <h3>{{ group.name }}</h3>
+                        </div>
+
+                        <button mat-raised-button color="primary" (click)="startStudy(group.id)">
+                            Start
+                        </button>
+                    </div>
+                </mat-card>
+            }
+        </div>
+    }
+</div>

@@ -4,6 +4,7 @@ import { GroupList } from './features/groups/pages/group-list/group-list';
 import { GroupView } from './features/groups/pages/group-view/group-view';
 import { GroupEdit } from './features/groups/pages/group-edit/group-edit';
 import { FlashcardCreate } from './features/flashcards/pages/flashcard-create/flashcard-create';
+import { StudyList } from './features/study/pages/study-list/study-list';
 
 export const routes: Routes = [
     {
@@ -24,11 +25,15 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'groups',
+        redirectTo: 'study',
         pathMatch: 'full'
     },
     {
         path: 'groups/:id/flashcards/create',
         component: FlashcardCreate
+    },
+    {
+        path: 'study',
+        component: StudyList
     }
 ];

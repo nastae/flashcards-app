@@ -47,3 +47,4 @@ Then Spring Boot serves frontend
 19. Study menu option: When user opens Study: show all groups, show flashcard counts, “Continue learning” (Continue), “Start studying” (Start) and Review
 20. Back button on toolar
 21. Improve group view page UX
+22. move mobile-nav component to separate directory (separate from groups)

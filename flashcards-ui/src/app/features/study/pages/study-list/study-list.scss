@@ -1,0 +1,32 @@
+.container {
+    width: 400px;
+    padding: 16px;
+    margin: 0 auto;
+    // padding-bottom: 90px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.study-card {
+    padding: 12px;
+    border-radius: 16px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// h2 {
+    // margin-bottom: 24px;
+// }
+
+h3 {
+    margin: 0;
+}
