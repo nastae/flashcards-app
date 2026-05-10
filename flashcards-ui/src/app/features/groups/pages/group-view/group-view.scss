@@ -25,6 +25,12 @@
     transform: translateY(-2px);
 }
 
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 // .actions {
 //     display: flex;
 //     flex-direction: row;

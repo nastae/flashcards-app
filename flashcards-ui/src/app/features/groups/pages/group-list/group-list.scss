@@ -20,6 +20,12 @@
     transform: scale(0.98);
 }
 
+.group-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .fab {
     position: fixed;
     bottom: 84px;

@@ -87,8 +87,7 @@
         <div class="list">
             @for (card of flashcards(); track $index) {
                 <mat-card class="flashcard-card" (click)="openFlashcard($index)">
-                    <mat-card-title>
-                        <!-- TODO: handle when text is large -->
+                    <mat-card-title class="card-title">
                         {{ card.frontText }}
                     </mat-card-title>
                 </mat-card>
