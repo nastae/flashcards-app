@@ -23,6 +23,18 @@
     align-items: center;
 }
 
+.card-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-title h3 {
+    // margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 // h2 {
     // margin-bottom: 24px;
 // }
