@@ -50,3 +50,4 @@ Then Spring Boot serves frontend
 22. move mobile-nav component to separate directory (separate from groups)
 23. On flashcard creation select create with translation to native language (like lithuanian) or add explanation
 24. Fix layouts to be for mobile web application
+25. (Flashcard -> create flashcard) Add loading when upload image into cloudinary and save flashcard request into database

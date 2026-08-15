@@ -22,16 +22,67 @@
             }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Image URL</mat-label>
+        <div class="image-section">
+            <label class="image-label">Image</label>
+            
+            <!-- [(value)]="imageSource" -->
+            <mat-button-toggle-group
+                [value]="imageSource"
+                (change)="onImageSourceChange($event.value)"
+                arial-label="Image source"
+                class="image-source">
 
-            <!-- TODO: how to set that only links would be valid -->
-            <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg"/>
+                <mat-button-toggle value="url">
+                    Image URL
+                </mat-button-toggle>
 
-            @if (form.get("imageUrl")?.invalid && form.get("imageUrl")?.touched) {
-                <mat-error>Image URL is required</mat-error>
+                <mat-button-toggle value="upload">
+                    File upload
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+
+            @if (imageSource === 'url') {
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Image URL</mat-label>
+
+                    <!-- TODO: how to set that only links would be valid -->
+                    <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg"/>
+
+                    @if (form.get("imageUrl")?.invalid && form.get("imageUrl")?.touched) {
+                        <!-- <mat-error>Image URL is required</mat-error> -->
+                         <mat-error>Please enter a valid image URL</mat-error>
+                    }
+                </mat-form-field>
+
             }
-        </mat-form-field>
+
+            @if (imageSource === 'upload') {
+
+                <div class="upload-container">
+                    <input
+                        #fileInput
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                        (change)="onFileSelected($event)"/>
+
+                    <button
+                        mat-stroked-button
+                        type="button"
+                        (click)="fileInput.click()">
+                        Choose image
+                    </button>
+
+                    @if (selectedFile) {
+                        <span class="selected-file">
+                            {{ selectedFile.name }}
+                        </span>
+                    }
+
+                </div>
+            }
+        </div>
         
         <button mat-raised-button color="primary" type="submit" class="full-width">
             Create Flashcard
