@@ -1,16 +1,16 @@
 // old style
-// .container {
-//     max-width: 400px;
-//     margin: 16px auto;
-//     padding: 16px;
-// }
 .container {
-  width: calc(100% - 32px);
-  max-width: 560px;
-  margin: 16px auto;
-  padding: 16px;
-  box-sizing: border-box;
+    max-width: 400px;
+    margin: 16px auto;
+    padding: 16px;
 }
+// .container {
+//   width: calc(100% - 32px);
+//   max-width: 560px;
+//   margin: 16px auto;
+//   padding: 16px;
+//   box-sizing: border-box;
+// }
 
 // h2 {
 //   margin: 0 0 20px;
