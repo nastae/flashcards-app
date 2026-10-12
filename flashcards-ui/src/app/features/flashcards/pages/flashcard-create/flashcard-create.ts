@@ -33,9 +33,10 @@ export class FlashcardCreate implements OnInit {
     imageUrl: ['']
   });
 
-  imageSource: 'url' | 'upload' = 'url';
+  imageSource: 'url' | 'upload' | 'ai' = 'url';
 
   selectedFile: File | null = null;
+  isSubmitting = false;
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get("id")!;
@@ -44,7 +45,7 @@ export class FlashcardCreate implements OnInit {
   // TODO: make proper error handling
   submit(formDirective: any) {
     if (this.form.invalid) {
-      // this.form.markAllAsTouched();
+      this.form.markAllAsTouched();
       return;
     }
 
@@ -58,12 +59,21 @@ export class FlashcardCreate implements OnInit {
       return;
     }
 
+    if (this.isSubmitting) {
+      return;
+    }
+
     if (this.imageSource === 'upload') {
       this.uploadAndCreateFlashcard(formDirective);
       return;
     }
 
-    this.createFlashcard(formDirective, this.form.getRawValue().imageUrl);
+    const imageUrl = this.imageSource === 'url' 
+      ? this.form.controls.imageUrl.value
+      : '';
+
+    // this.createFlashcard(formDirective, this.form.getRawValue().imageUrl);
+    this.createFlashcard(formDirective, imageUrl);
 
     // const request: FlashcardRequest = this.form.getRawValue();
 
@@ -100,9 +110,12 @@ export class FlashcardCreate implements OnInit {
       return;
     }
 
+    this.isSubmitting = true;
+
     this.cloudinaryService.uploadImage(this.selectedFile).subscribe({
       next: (imageUrl) => {
         this.createFlashcard(formDirective, imageUrl);
+        this.isSubmitting = false;
       },
       // TODO: make proper error handling
       error: (err) => {
@@ -113,27 +126,39 @@ export class FlashcardCreate implements OnInit {
           verticalPosition: 'bottom',
           panelClass: ['mobile-snackbar']
         });
+
+        this.isSubmitting = false;
       }
     });
   }
 
   private createFlashcard(formDirective: any, imageUrl: string): void {
 
+    this.isSubmitting = true;
+
     const request: FlashcardRequest = {
       ...this.form.getRawValue(),
-      imageUrl
+      imageUrl,
+
+      generateImageWithAi: this.imageSource === 'ai'
     }
 
     this.flashcardService
       .createFlashcard(this.groupId, request)
       .subscribe({
         next: () => {
+          this.isSubmitting = false;
 
-          this.snackBar.open('Flashcard created ✅', 'Close', {
-            duration: 2000,
-            verticalPosition: 'bottom',
-            panelClass: ['mobile-snackbar']
-          });
+          this.snackBar.open(
+            this.imageSource === 'ai'
+              ? 'Flashcard created. Image generation will run in the background.' 
+              : 'Flashcard created ✅', 
+            'Close', {
+              duration: 2000,
+              verticalPosition: 'bottom',
+              panelClass: ['mobile-snackbar']
+            }
+          );
 
           this.form.reset();
           formDirective.resetForm();
@@ -147,6 +172,7 @@ export class FlashcardCreate implements OnInit {
         },
         // TODO: add proper error handling
         error: (err) => {
+          this.isSubmitting = false;
           console.log(err);
 
           this.snackBar.open('Error creating flashcard ❌', 'Close', {
@@ -169,10 +195,17 @@ export class FlashcardCreate implements OnInit {
     this.selectedFile = input.files[0];
   }
 
-  onImageSourceChange(source: 'url' | 'upload'): void {
+  onImageSourceChange(source: 'url' | 'upload' | 'ai'): void {
     this.imageSource = source;
 
     const imageUrlControl = this.form.controls.imageUrl;
+    // TODO: maybe not used and remove
+    const aiPrompt = {
+      word: this.form.controls.frontText,
+      description: this.form.controls.backText
+    }
+
+    this.selectedFile = null;
 
     if (source === 'url') {
       imageUrlControl.setValidators([
@@ -181,6 +214,7 @@ export class FlashcardCreate implements OnInit {
       ]);
     } else {
       imageUrlControl.clearValidators();
+      imageUrlControl.setValue('');
     }
 
     imageUrlControl.updateValueAndValidity();

@@ -76,4 +76,8 @@ export class StudySession implements OnInit {
   onCreateFlashcard() {
     this.router.navigate(['/groups', this.groupId, 'flashcards', 'create']);
   }
+
+  retryImageGeneration(flashcardId: number): void {
+    // TODO: call backend endpoint to schedule image-generation retry.
+  }
 }

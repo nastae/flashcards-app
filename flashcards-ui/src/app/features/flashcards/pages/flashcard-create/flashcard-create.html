@@ -29,7 +29,7 @@
             <mat-button-toggle-group
                 [value]="imageSource"
                 (change)="onImageSourceChange($event.value)"
-                arial-label="Image source"
+                arial-label="Choose image source"
                 class="image-source">
 
                 <mat-button-toggle value="url">
@@ -38,6 +38,10 @@
 
                 <mat-button-toggle value="upload">
                     File upload
+                </mat-button-toggle>
+
+                <mat-button-toggle value="ai">
+                    Create with AI
                 </mat-button-toggle>
             </mat-button-toggle-group>
 
@@ -78,14 +82,44 @@
                         <span class="selected-file">
                             {{ selectedFile.name }}
                         </span>
+                    } @else {
+                        <span class="helper-text">PNG, JPG and Webp</span>
                     }
 
                 </div>
             }
+
+            @if (imageSource === 'ai') {
+                <div class="ai-container">
+                    <div class="ai-heading">
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+                            <h3>Generate image in the background</h3>
+
+                            <p>
+                                Your flashcard will be created immediately. The image will be generated in the background and appear when it's ready.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
         
-        <button mat-raised-button color="primary" type="submit" class="full-width">
-            Create Flashcard
+        <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            class="full-width"
+            [disabled]="isSubmitting"
+        >
+            @if (isSubmitting) {
+                Creating flashcard...
+            } @else {
+                Create Flashcard
+            }
         </button>
     </form>
 </mat-card>

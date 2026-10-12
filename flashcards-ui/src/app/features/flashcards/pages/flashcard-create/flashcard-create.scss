@@ -64,6 +64,54 @@
     white-space: nowrap;
 }
 
+.helper-text {
+    font-size: 14px;
+    color: #666;
+    overflow-wrap: anywhere;
+}
+
+.ai-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #e1ddf5;
+    border-radius: 12px;
+    background: #faf9ff;
+}
+
+.ai-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0;
+        color: #666;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+.ai-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #eee8ff;
+    color: #7048c8;
+    font-size: 22px;
+}
+
 @media (min-width: 600px) {
     .container {
         margin: 32px auto;

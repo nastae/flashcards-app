@@ -1,20 +1,56 @@
 <div class="container">
 
-    @if (currentCard()) {
+    @if (currentCard(); as card) {
         <div class="progress">
             {{ currentIndex() + 1 }} / {{ cards().length }}
         </div>
 
         <mat-card class="study-card">
-            @if (currentCard().imageUrl) {
-                <img [src]="currentCard().imageUrl" alt="Flashcard image" class="card-image">
+            @switch (card.imageGenerationStatus ?? 'NONE') {
+                @case ('READY') {
+                    @if (card.imageUrl) {
+                        <img [src]="card.imageUrl" alt="Flashcard image" class="card-image">
+                    }
+                }
+
+                @case ('GENERATING') {
+                    <div class="image-placeholder" role="status">
+                        <span class="placeholder-icon">✦</span>
+                        <p>Creating your image...</p>
+                        <span class="placeholder-hint">
+                            You can keep studying when we work.
+                        </span>
+                    </div>
+                }
+
+                @case ('FAILED') {
+                    <div class="image-placeholder image-failed">
+                        <span class="placeholder-icon">✦</span>
+                        <p>We couldn't create this image.</p>
+                        <span class="placeholder-hint">
+                            Your flashcard is still ready to study.
+                        </span>
+
+                        <button
+                            mat-stroked-button
+                            type="button"
+                            (click)="retryImageGeneration(card.id)"
+                        >
+                        </button>
+                    </div>
+                }
+
+                @case ('NONE') {
+                    <!-- No image requested: show no image placeholder. -->
+                }
             }
 
-            <div class="front-text">{{ currentCard().frontText }}</div>
+            
+            <div class="front-text">{{ card.frontText }}</div>
 
             <!-- TODO: if statement not needed -->
-            @if (currentCard().backText) {
-                <div class="back-text">{{ currentCard().backText }}</div>
+            @if (card.backText) {
+                <div class="back-text">{{ card.backText }}</div>
             }
         </mat-card>
 
