@@ -52,3 +52,4 @@ Then Spring Boot serves frontend
 24. Fix layouts to be for mobile web application
 25. (Flashcard -> create flashcard) Add loading when upload image into cloudinary and save flashcard request into database
 26. Add edit flashcard page
+27. Fix study page to allow to show image, when there is normal flashcard, prompt: when flashcard is normal, it should show image, how to make it? answer in short.
