@@ -56,3 +56,4 @@ Then Spring Boot serves frontend
 28. On AI image generation, what status (ImageGenerationStatus) should have, if image uploaded or inserted URL?
 29. add a persisted job/outbox mechanism and recovery for stale PENDING/GENERATING jobs (ImageGenerationJobWorker)
 30. add integration tests for the four main outcomes: no AI request, successful generation, failed generation, and retry. (ImageGenerationJobWorker)
+31. Update README.md to setup Cloudinary and Cloudflare environment variables on a machine
