@@ -31,6 +31,7 @@ public class FlashcardService {
     private final ImageGenerationStateService imageGenerationStateService;
 
 //    TODO: throw specific error and handle that status on http request as response
+    @Transactional
     public FlashcardResponseDto create(Long groupId, FlashcardRequestDto request) {
         boolean generateWithAi = request.requestsAiImage();
 
