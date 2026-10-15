@@ -6,46 +6,57 @@
         </div>
 
         <mat-card class="study-card">
-            @switch (card.imageGenerationStatus ?? 'NONE') {
-                @case ('READY') {
-                    @if (card.imageUrl) {
-                        <img [src]="card.imageUrl" alt="Flashcard image" class="card-image">
+            @if (card.imageUrl) {
+                <img
+                    [src]="card.imageUrl"
+                    alt="Flashcard image"
+                    class="card-image"
+                />
+            } @else {
+                @switch (card.imageGenerationStatus ?? 'NONE') {
+                    @case ('PENDING') {
+                        <div class="image-placeholder" role="status">
+                            <span class="placeholder-icon">✦</span>
+                            <p>Image queued for generation...</p>
+                            <span class="placeholder-hint">
+                                You can keep studying when we work.
+                            </span>
+                        </div>
+                    }
+
+                    @case ('GENERATING') {
+                        <div class="image-placeholder" role="status">
+                            <span class="placeholder-icon">✦</span>
+                            <p>Generating image...</p>
+                            <span class="placeholder-hint">
+                                You can keep studying when we work.
+                            </span>
+                        </div>
+                    }
+
+                    @case ('FAILED') {
+                        <div class="image-placeholder image-failed">
+                            <span class="placeholder-icon">✦</span>
+                            <p>Image unavailable.</p>
+                            <span class="placeholder-hint">
+                                Your flashcard is still ready to study.
+                            </span>
+
+                            <!-- <button
+                                mat-stroked-button
+                                type="button"
+                                (click)="retryImageGeneration(card.id)"
+                            >
+                                Retry
+                            </button> -->
+                        </div>
+                    }
+
+                    @case ('NONE') {
+                        <!-- No image: show only the flashcard text -->
                     }
                 }
-
-                @case ('PENDING')
-                @case ('GENERATING') {
-                    <div class="image-placeholder" role="status">
-                        <span class="placeholder-icon">✦</span>
-                        <p>Creating your image...</p>
-                        <span class="placeholder-hint">
-                            You can keep studying when we work.
-                        </span>
-                    </div>
-                }
-
-                @case ('FAILED') {
-                    <div class="image-placeholder image-failed">
-                        <span class="placeholder-icon">✦</span>
-                        <p>We couldn't create this image.</p>
-                        <span class="placeholder-hint">
-                            Your flashcard is still ready to study.
-                        </span>
-
-                        <button
-                            mat-stroked-button
-                            type="button"
-                            (click)="retryImageGeneration(card.id)"
-                        >
-                        </button>
-                    </div>
-                }
-
-                @case ('NONE') {
-                    <!-- No image requested: show no image placeholder. -->
-                }
             }
-
             
             <div class="front-text">{{ card.frontText }}</div>
 

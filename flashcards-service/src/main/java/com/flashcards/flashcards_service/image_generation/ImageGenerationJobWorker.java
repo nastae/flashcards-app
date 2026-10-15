@@ -29,8 +29,15 @@ public class ImageGenerationJobWorker {
         try {
             prompt = imageGenerationStateService.markGenerating(flashcardId);
 
-            if (prompt.isEmpty() || prompt.get().isBlank()) {
+            if (prompt.isEmpty()) {
+                log.error("Image-generation prompt is empty");
                 return;
+            }
+
+            if (prompt.get().isBlank()) {
+                throw new IllegalStateException(
+                        "Image-generation prompt is blank"
+                );
             }
 
             String imageUrl = imageGenerationService.generateImage(prompt.get());

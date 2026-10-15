@@ -4,6 +4,7 @@ import com.flashcards.flashcards_service.dto.FlashcardRequestDto;
 import com.flashcards.flashcards_service.dto.FlashcardResponseDto;
 import com.flashcards.flashcards_service.service.FlashcardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,15 @@ public class FlashcardController {
     @PostMapping("/{groupId}")
     public FlashcardResponseDto create(@PathVariable Long groupId, @RequestBody FlashcardRequestDto request) {
         return flashcardService.create(groupId, request);
+    }
+
+//    TODO: maybe for other endpoint requests use also ResponseEntity?
+    @PostMapping("/groups/{groupId}/flashcards/{flashcardId}/image-generation/retry")
+    public ResponseEntity<Void> retryImageGeneration(
+            @PathVariable Long groupId,
+            @PathVariable Long flashcardId) {
+        flashcardService.retryImageGeneration(groupId, flashcardId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/{id}")

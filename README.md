@@ -52,5 +52,7 @@ Then Spring Boot serves frontend
 24. Fix layouts to be for mobile web application
 25. (Flashcard -> create flashcard) Add loading when upload image into cloudinary and save flashcard request into database
 26. Add edit flashcard page
-27. Fix study page to allow to show image, when there is normal flashcard, prompt: when flashcard is normal, it should show image, how to make it? answer in short.
+27. (Done) Fix study page to allow to show image, when there is normal flashcard, prompt: when flashcard is normal, it should show image, how to make it? answer in short.
 28. On AI image generation, what status (ImageGenerationStatus) should have, if image uploaded or inserted URL?
+29. add a persisted job/outbox mechanism and recovery for stale PENDING/GENERATING jobs (ImageGenerationJobWorker)
+30. add integration tests for the four main outcomes: no AI request, successful generation, failed generation, and retry. (ImageGenerationJobWorker)
