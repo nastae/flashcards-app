@@ -44,7 +44,9 @@ public class ImageGenerationStateService {
     public void markReady(Long flashcardId, String imageUrl) {
         Flashcard flashcard = flashcardRepository.findById(flashcardId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Flashcard not found"));
+                        new IllegalArgumentException("Flashcard not found: %s".formatted(
+                                flashcardId
+                        )));
 
         flashcard.setImageUrl(imageUrl);
         flashcard.setImageGenerationStatus(READY);

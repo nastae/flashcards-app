@@ -80,3 +80,4 @@ Then Spring Boot serves frontend
 30. add integration tests for the four main outcomes: no AI request, successful generation, failed generation, and retry. (ImageGenerationJobWorker)
 31. Update README.md to setup Cloudinary and Cloudflare environment variables on a machine
 32. Create translation to english from native language word, create native language dropdown, native or english word text input, and radio button or some other element to set translate automatically or translate by yourself
+33. Make to generate images without text
