@@ -8,6 +8,28 @@ cd flashcards-service
 ./mvnw spring-boot:run
 ```
 
+#### Configure Cloudflare and Cloudinary Services
+The application relies on environment variables for sensitive credentials (such as API tokens and secrets) which are mapped directly inside `application.yaml`.
+
+##### Global Setup (Windows Machine)
+To make these environment variables available globally across your Windows system (so IntelliJ, terminal windows, and other tools pick them up automatically):
+
+1. Press the **Windows Key**, type **Environment Variables**, and select **Edit the system environment variables**.
+2. Click the **Environment Variables...** button at the bottom right.
+3. In the top window (**User variables for your user**), click **New...** (or choose **System variables** if you want them for all users).
+4. Add your configuration keys:
+    * **Variable name:** `CLOUDFLARE_API_TOKEN` | **Variable value:** `your_actual_token`
+    * **Variable name:** `CLOUDINARY_URL` | **Variable value:** `your_actual_url`
+5. Click **OK** on all windows to save.
+
+*Note: Restart IntelliJ or your terminal if they were already open so they can load the new global environment variables.*
+
+##### Alternative: Local IntelliJ Configuration Only
+If you prefer not to set them globally on your machine:
+1. Go to **Run** → **Edit Configurations...** in IntelliJ.
+2. Select your Spring Boot application configuration.
+3. In the **Environment variables** field, add your variables separated by semicolons (e.g., `CLOUDFLARE_API_TOKEN=your_token;CLOUDINARY_URL=your_url`).
+
 ### Run frontend:
 ```
 cd flashcards-ui
