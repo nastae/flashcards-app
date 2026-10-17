@@ -11,3 +11,5 @@ flashcards-ui/.angular/
 
 # OS
 .DS_Store
+
+out
