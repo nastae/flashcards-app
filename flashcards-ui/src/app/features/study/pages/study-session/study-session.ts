@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Study } from '../../services/study';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
+import { Flashcard } from '../../../flashcards/services/flashcard';
 
 @Component({
   selector: 'app-study-session',
@@ -15,6 +16,7 @@ export class StudySession implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private studyService = inject(Study);
+  private readonly flashcardService = inject(Flashcard);
 
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
@@ -78,6 +80,20 @@ export class StudySession implements OnInit {
   }
 
   retryImageGeneration(flashcardId: number): void {
-    // TODO: call backend endpoint to schedule image-generation retry.
+    const numericGroupId = Number(this.groupId);
+
+    if (isNaN(numericGroupId)) {
+      console.error("Invalid group ID:", this.groupId);
+      return;
+    }
+
+    this.flashcardService.retryImageGeneration(numericGroupId, flashcardId).subscribe({
+      next: () => {
+        console.log("Retry initiated successfully!")
+      },
+      error: (err) => {
+        console.error("Failed to retry image generatino", err);
+      }
+    });
   }
 }
