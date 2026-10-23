@@ -5,4 +5,5 @@ export interface FlashcardRequest {
     backText: string;
     imageUrl: string;
     generateImageWithAi?: boolean;
+    nativeWord?: string | null;
 }

@@ -5,7 +5,8 @@ public record FlashcardRequestDto(
         String frontText,
         String backText,
         String imageUrl,
-        Boolean generateImageWithAi) {
+        Boolean generateImageWithAi,
+        String nativeWord) {
 
     public boolean requestsAiImage() {
         return Boolean.TRUE.equals(generateImageWithAi);

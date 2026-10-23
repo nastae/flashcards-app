@@ -81,3 +81,4 @@ Then Spring Boot serves frontend
 31. Update README.md to setup Cloudinary and Cloudflare environment variables on a machine
 32. Create translation to english from native language word, create native language dropdown, native or english word text input, and radio button or some other element to set translate automatically or translate by yourself
 33. Make to generate images without text
+34. choose which language they see first during study. English → Lithuanian: Show Apple first; the user recalls Obuolys. Lithuanian → English: Show Obuolys first; the user recalls Apple.

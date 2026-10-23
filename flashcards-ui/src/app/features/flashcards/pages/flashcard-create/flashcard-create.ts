@@ -30,7 +30,8 @@ export class FlashcardCreate implements OnInit {
   form = this.fb.nonNullable.group({
     frontText: ['', Validators.required],
     backText: ['', Validators.required],
-    imageUrl: ['']
+    imageUrl: [''],
+    nativeWord: ['', Validators.maxLength(255)]
   });
 
   imageSource: 'url' | 'upload' | 'ai' = 'url';
@@ -138,6 +139,7 @@ export class FlashcardCreate implements OnInit {
 
     const request: FlashcardRequest = {
       ...this.form.getRawValue(),
+      nativeWord: this.form.controls.nativeWord.value.trim() || null,
       imageUrl,
 
       generateImageWithAi: this.imageSource === 'ai'

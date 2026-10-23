@@ -24,6 +24,8 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 public class Flashcard {
 
+    private static final int NATIVE_WORD_MAX_LENGTH = 255;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,4 +49,7 @@ public class Flashcard {
     @Enumerated(EnumType.STRING)
     @Column(name = "image_generation_status", nullable = false)
     private ImageGenerationStatus imageGenerationStatus = ImageGenerationStatus.NONE;
+
+    @Column(name = "native_word", length = NATIVE_WORD_MAX_LENGTH)
+    private String nativeWord;
 }

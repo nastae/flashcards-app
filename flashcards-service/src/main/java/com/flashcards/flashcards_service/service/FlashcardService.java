@@ -52,6 +52,7 @@ public class FlashcardService {
 //        TODO: save image to cloudinary and then set imageUrl
 //        flashcard.setImageUrl(request.imageUrl());
         flashcard.setGroup(group);
+        flashcard.setNativeWord(request.nativeWord());
 
         if (generateWithAi) {
             flashcard.setImageUrl(null);

@@ -8,6 +8,7 @@ public record FlashcardResponseDto(
         String backText,
         String imageUrl,
         Long groupId,
-        ImageGenerationStatus imageGenerationStatus) {
+        ImageGenerationStatus imageGenerationStatus,
+        String nativeWord) {
 //    String groupName   // 👈 useful for UI
 }

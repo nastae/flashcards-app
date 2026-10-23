@@ -6,6 +6,18 @@
         </div>
 
         <mat-card class="study-card">
+            @if (card.nativeWord) {
+                <div class="native-word-section">
+                    <span class="native-language-label">
+                        Lietuvių kalba
+                    </span>
+
+                    <span class="native-word">
+                        {{ card.nativeWord }}
+                    </span>
+                </div>
+            }
+
             @if (card.imageUrl) {
                 <img
                     [src]="card.imageUrl"

@@ -8,5 +8,6 @@ export interface FlashcardResponse {
     backText?: string;
     imageUrl?: string;
     // TODO: I dont know if it is needed for request or response
-    imageGenerationStatus?: ImageGenerationStatus
+    imageGenerationStatus?: ImageGenerationStatus;
+    nativeWord?: string | null;
 }
