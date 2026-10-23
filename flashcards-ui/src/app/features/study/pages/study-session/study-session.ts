@@ -5,10 +5,11 @@ import { Study } from '../../services/study';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
 import { Flashcard } from '../../../flashcards/services/flashcard';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-study-session',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatSlideToggleModule],
   templateUrl: './study-session.html',
   styleUrl: './study-session.scss',
 })
@@ -20,6 +21,14 @@ export class StudySession implements OnInit {
 
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
+
+  readonly alwaysShowAnswers = signal(false);
+
+  readonly answerRevealed = signal(false);
+
+  readonly answerVisible = computed(
+    () => this.alwaysShowAnswers() || this.answerRevealed()
+  );
 
   currentCard = computed(() => 
     this.cards()[this.currentIndex()]
@@ -40,9 +49,14 @@ export class StudySession implements OnInit {
     });
   }
 
+  toggleAnswer(): void {
+    this.answerRevealed.update(revealed => !revealed);
+  }
+
   previous(): void {
     if (this.currentIndex() > 0) {
       this.currentIndex.update(i => i - 1);
+      this.answerRevealed.set(false);
     }
   }
 
@@ -65,6 +79,7 @@ export class StudySession implements OnInit {
   next() {
     if (this.currentIndex() < this.cards().length - 1) {
       this.currentIndex.update(i => i + 1);
+      this.answerRevealed.set(false);
       return;
     }
 

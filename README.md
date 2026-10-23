@@ -82,3 +82,11 @@ Then Spring Boot serves frontend
 32. Create translation to english from native language word, create native language dropdown, native or english word text input, and radio button or some other element to set translate automatically or translate by yourself
 33. Make to generate images without text
 34. choose which language they see first during study. English → Lithuanian: Show Apple first; the user recalls Obuolys. Lithuanian → English: Show Obuolys first; the user recalls Apple.
+35. Introduce learning language and native language. 
+35.1. When adding multiple languages: Introduce learningLanguage and nativeLanguage as explicit metadata, ideally at the deck or study-group level.
+35.2. For study sessions: Use the language metadata to display labels such as “Spanish word” and “Lithuanian translation,” and later support reverse study direction.
+35.3. Update image generation by learning language word, definition in english or native language, or learning language
+35.4. add a session-level direction selector, so learners can practise both ways without duplicating flashcards.
+36. add “I knew it” / “I didn’t know it”
+37. one direction, native → English. Add native language  list
+38. Add English text for navigation: If the list is for a website or app dropdown menu, it is best practice to include the English name alongside the native name (e.g., Deutsch (German)) so all users can navigate it easily.

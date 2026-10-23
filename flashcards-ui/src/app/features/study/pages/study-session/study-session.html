@@ -5,6 +5,25 @@
             {{ currentIndex() + 1 }} / {{ cards().length }}
         </div>
 
+        <div class="study-settings">
+            <div class="study-settings__text">
+                <span class="study-settings__label">
+                    Study option
+                </span>
+
+                <span class="study-settings__hint">
+                    Show answers automatically
+                </span>
+            </div>
+
+            <mat-slide-toggle
+                class="study-settings__toggle"
+                [checked]="alwaysShowAnswers()"
+                (change)="alwaysShowAnswers.set($event.checked)"
+                aria-label="Always show answers"
+            />
+        </div>
+
         <mat-card class="study-card">
             @if (card.nativeWord) {
                 <div class="native-word-section">
@@ -70,13 +89,31 @@
                     }
                 }
             }
-            
-            <div class="front-text">{{ card.frontText }}</div>
 
-            <!-- TODO: if statement not needed -->
-            @if (card.backText) {
-                <div class="back-text">{{ card.backText }}</div>
+            @if (answerVisible()) {
+                <div class="answer-section">
+                    <div class="front-text">{{ card.frontText }}</div>
+
+                    <!-- TODO: if statement not needed -->
+                    @if (card.backText) {
+                        <div class="back-text">{{ card.backText }}</div>
+                    }
+                </div>
             }
+
+            @if (!alwaysShowAnswers()) {
+                <div class="reveal-action">
+                    <button
+                        mat-stroked-button
+                        color="primary"
+                        type="button"
+                        (click)="toggleAnswer()"
+                    >
+                        {{ answerRevealed() ? 'Hide answer' : 'Show answer' }}
+                    </button>
+                </div>
+            }
+            
         </mat-card>
 
         <div class="actions">
