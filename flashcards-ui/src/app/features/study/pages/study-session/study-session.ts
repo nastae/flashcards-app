@@ -6,6 +6,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
 import { Flashcard } from '../../../flashcards/services/flashcard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { StudyPreferencesService } from '../../services/study-preferences/study-preferences.service';
 
 @Component({
   selector: 'app-study-session',
@@ -18,11 +19,14 @@ export class StudySession implements OnInit {
   private router = inject(Router);
   private studyService = inject(Study);
   private readonly flashcardService = inject(Flashcard);
+  private readonly studyPreferences = inject(StudyPreferencesService);
 
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
 
-  readonly alwaysShowAnswers = signal(false);
+  readonly alwaysShowAnswers = signal(
+    this.studyPreferences.alwaysShowAnswers()
+  );
 
   readonly answerRevealed = signal(false);
 
@@ -47,6 +51,11 @@ export class StudySession implements OnInit {
       next: (result) => this.cards.set(result),
       error: (err) => console.log(err)
     });
+  }
+
+  onAlwaysShowAnswersChange(value: boolean): void {
+    this.alwaysShowAnswers.set(value);
+    this.studyPreferences.setAlwaysShowAnswers(value);
   }
 
   toggleAnswer(): void {

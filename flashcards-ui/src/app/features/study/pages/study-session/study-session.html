@@ -19,7 +19,7 @@
             <mat-slide-toggle
                 class="study-settings__toggle"
                 [checked]="alwaysShowAnswers()"
-                (change)="alwaysShowAnswers.set($event.checked)"
+                (change)="onAlwaysShowAnswersChange($event.checked)"
                 aria-label="Always show answers"
             />
         </div>
