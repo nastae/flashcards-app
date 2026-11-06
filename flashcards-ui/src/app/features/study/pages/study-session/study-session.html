@@ -5,24 +5,69 @@
             {{ currentIndex() + 1 }} / {{ cards().length }}
         </div>
 
-        <div class="study-settings">
-            <div class="study-settings__text">
-                <span class="study-settings__label">
-                    Study option
-                </span>
+        <mat-expansion-panel
+            class="study-settings-panel"
+            [expanded]="false"
+        >
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Study settings
+                </mat-panel-title>
 
-                <span class="study-settings__hint">
-                    Show answers automatically
-                </span>
+                <mat-panel-description>
+                    {{ studyDirection() === 'NATIVE_TO_LEARNING'
+                        ? 'Native → Learning'
+                        : 'Learning → Native' }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="study-settings">
+                <div class="study-settings__direction">
+                    <span class="study-settings__label">
+                        Study direction
+                    </span>
+
+                    <mat-button-toggle-group
+                        [value]="studyDirection()"
+                        (change)="onStudyDirectionChange($event.value)"
+                        aria-label="Study direction"
+                        hideSingleSelectionIndicator
+                    >
+                        <mat-button-toggle
+                            value="NATIVE_TO_LEARNING"
+                        >
+                            Native → Learning
+                        </mat-button-toggle>
+
+                        <mat-button-toggle
+                            value="LEARNING_TO_NATIVE"
+                        >
+                            Learning → Native
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+
+                <div class="study-settings__automatic">
+                    <div class="study-settings__text">
+                        <span class="study-settings__label">
+                             Show answer automatically
+                        </span>
+
+                        <span class="study-settings__hint">
+                             Reveal answers on every card
+                        </span>
+                    </div>
+
+                    <mat-slide-toggle
+                        class="study-settings__toggle"
+                        [checked]="alwaysShowAnswers()"
+                        (change)="onAlwaysShowAnswersChange($event.checked)"
+                        aria-label="Always show answers"
+                    />
+                </div>
             </div>
 
-            <mat-slide-toggle
-                class="study-settings__toggle"
-                [checked]="alwaysShowAnswers()"
-                (change)="onAlwaysShowAnswersChange($event.checked)"
-                aria-label="Always show answers"
-            />
-        </div>
+        </mat-expansion-panel>
 
         <mat-card class="study-card">
             @if (card.nativeWord) {
@@ -113,7 +158,7 @@
                     </button>
                 </div>
             }
-            
+
         </mat-card>
 
         <div class="actions">

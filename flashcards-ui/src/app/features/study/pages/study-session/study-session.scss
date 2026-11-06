@@ -98,12 +98,15 @@
 }
 
 .card-image {
+    display: block;
     width: 100%;
     max-width: 300px;
 
     max-height: 35vh;
 
     object-fit: contain;
+
+    margin: 0 auto;
 
     border-radius: 12px;
 
@@ -151,18 +154,37 @@
     flex-shrink: 0;
 }
 
+.study-settings-panel {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px !important;
+    box-shadow: none;
+}
+
 .study-settings {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 16px;
 
     margin-bottom: 16px;
     padding: 12px 16px;
+}
 
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+.study-settings__automatic {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+}
+
+.study-settings__direction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .study-settings__text {
@@ -203,7 +225,7 @@
 }
 
 @media (max-width: 400px) {
-    
+
     .font-text {
         font-size: 24px;
     }
@@ -221,5 +243,62 @@
 
     .study-settings {
         padding: 10px 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .study-settings-panel {
+        margin-bottom: 10px;
+    }
+
+    .study-settings-panel mat-expansion-panel-header {
+        padding: 0 24px;
+    }
+
+    .study-settings-panel mat-panel-title {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .study-settings-panel mat-panel-description {
+        display: none;
+    }
+
+    .study-settings {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .study-settings__direction {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .study-settings__direction mat-button-toggle-group {
+        display: flex;
+        width: 100%;
+    }
+
+    .study-settings__direction mat-button-toggle {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .study-settings__automatic {
+        padding-top: 12px;
+        border-top: 1px solid #eee;
+    }
+
+    .card-image {
+        max-height: clamp(200px, 24svh, 300px);
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .study-card {
+        padding: 12px;
     }
 }

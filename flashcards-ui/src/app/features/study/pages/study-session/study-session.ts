@@ -7,10 +7,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { Flashcard } from '../../../flashcards/services/flashcard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { StudyPreferencesService } from '../../services/study-preferences/study-preferences.service';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+type StudyDirection = 'NATIVE_TO_LEARNING' | 'LEARNING_TO_NATIVE';
 
 @Component({
   selector: 'app-study-session',
-  imports: [MatCardModule, MatButtonModule, MatSlideToggleModule],
+  imports: [
+    MatCardModule, 
+    MatButtonModule, 
+    MatSlideToggleModule, 
+    MatButtonToggleGroup, 
+    MatButtonToggle,
+    MatExpansionModule
+  ],
   templateUrl: './study-session.html',
   styleUrl: './study-session.scss',
 })
@@ -23,6 +34,8 @@ export class StudySession implements OnInit {
 
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
+
+  readonly studyDirection = signal<StudyDirection>('NATIVE_TO_LEARNING');
 
   readonly alwaysShowAnswers = signal(
     this.studyPreferences.alwaysShowAnswers()
@@ -51,6 +64,11 @@ export class StudySession implements OnInit {
       next: (result) => this.cards.set(result),
       error: (err) => console.log(err)
     });
+  }
+
+  onStudyDirectionChange(direction: StudyDirection): void {
+    this.studyDirection.set(direction);
+    this.answerRevealed.set(false);
   }
 
   onAlwaysShowAnswersChange(value: boolean): void {
