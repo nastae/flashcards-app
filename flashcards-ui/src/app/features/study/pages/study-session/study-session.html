@@ -70,14 +70,14 @@
         </mat-expansion-panel>
 
         <mat-card class="study-card">
-            @if (card.nativeWord) {
+            @if (showQuestionWord()) {
                 <div class="native-word-section">
-                    <span class="native-language-label">
-                        Lietuvių kalba
+                    <span class="language-label">
+                        {{ questionLanguageLabel() }}
                     </span>
 
                     <span class="native-word">
-                        {{ card.nativeWord }}
+                        {{ questionWord() }}
                     </span>
                 </div>
             }
@@ -135,18 +135,22 @@
                 }
             }
 
-            @if (answerVisible()) {
+            @if (answerVisible() && showAnswerWord()) {
                 <div class="answer-section">
-                    <div class="front-text">{{ card.frontText }}</div>
+                    <span class="language-label">
+                        {{ answerLanguageLabel() }}
+                    </span>
+
+                    <div class="front-text">{{ answerWord() }}</div>
 
                     <!-- TODO: if statement not needed -->
-                    @if (card.backText) {
+                    @if (card.backText && studyDirection() === 'NATIVE_TO_LEARNING') {
                         <div class="back-text">{{ card.backText }}</div>
                     }
                 </div>
             }
 
-            @if (!alwaysShowAnswers()) {
+            @if (!alwaysShowAnswers() && showAnswerWord()) {
                 <div class="reveal-action">
                     <button
                         mat-stroked-button

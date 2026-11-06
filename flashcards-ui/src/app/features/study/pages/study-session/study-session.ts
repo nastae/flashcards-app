@@ -9,8 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { StudyPreferencesService } from '../../services/study-preferences/study-preferences.service';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-type StudyDirection = 'NATIVE_TO_LEARNING' | 'LEARNING_TO_NATIVE';
+import { StudyDirection } from '../../models/study-direction/study-direction.type';
 
 @Component({
   selector: 'app-study-session',
@@ -35,7 +34,9 @@ export class StudySession implements OnInit {
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
 
-  readonly studyDirection = signal<StudyDirection>('NATIVE_TO_LEARNING');
+  readonly studyDirection = signal<StudyDirection>(
+    this.studyPreferences.studyDirection()
+  );
 
   readonly alwaysShowAnswers = signal(
     this.studyPreferences.alwaysShowAnswers()
@@ -50,6 +51,66 @@ export class StudySession implements OnInit {
   currentCard = computed(() => 
     this.cards()[this.currentIndex()]
   );
+
+  readonly showQuestionWord = computed(() => {
+    const card = this.currentCard();
+
+    if (!card) {
+      return false;
+    }
+
+    return this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? !!card.nativeWord
+      : !!card.frontText;
+  });
+
+  readonly showAnswerWord = computed(() => {
+    const card = this.currentCard();
+
+    if (!card) {
+      return false;
+    }
+
+    return this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? !!card.frontText
+      : !!card.nativeWord;
+  });
+
+  readonly questionLanguageLabel = computed(() =>
+    this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? 'Lietuvių kalba'
+      : 'English language'
+  );
+
+  readonly answerLanguageLabel = computed(() =>
+    this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? 'English language'
+      : 'Lietuvių kalba'
+  );
+
+  readonly questionWord = computed(() => {
+    const card = this.currentCard();
+
+    if (!card) {
+      return '';
+    }
+
+    return this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? card.nativeWord
+      : card.frontText;
+  });
+
+  readonly answerWord = computed(() => {
+    const card = this.currentCard();
+
+    if (!card) {
+      return '';
+    }
+
+    return this.studyDirection() === 'NATIVE_TO_LEARNING'
+      ? card.frontText
+      : card.nativeWord;
+  });
 
   groupId!: string;
 
@@ -68,6 +129,7 @@ export class StudySession implements OnInit {
 
   onStudyDirectionChange(direction: StudyDirection): void {
     this.studyDirection.set(direction);
+    this.studyPreferences.setStudyDirection(direction);
     this.answerRevealed.set(false);
   }
 

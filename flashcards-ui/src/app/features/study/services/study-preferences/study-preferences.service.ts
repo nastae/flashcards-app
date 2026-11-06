@@ -1,13 +1,16 @@
 import { Injectable, signal } from '@angular/core';
+import { StudyDirection } from '../../models/study-direction/study-direction.type';
 
 const STORAGE_KEY = 'study-preferences';
 
 interface StudyPreferences {
-  alwaysShowAnswers: boolean
+  alwaysShowAnswers: boolean;
+  studyDirection: StudyDirection;
 }
 
 const DEFAULT_PREFERENCES: StudyPreferences = {
-  alwaysShowAnswers: false
+  alwaysShowAnswers: false,
+  studyDirection: 'NATIVE_TO_LEARNING'
 };
 
 @Injectable({
@@ -21,16 +24,32 @@ export class StudyPreferencesService {
   readonly alwaysShowAnswers = () => 
     this.preferences().alwaysShowAnswers;
 
+  readonly studyDirection = () =>
+    this.preferences().studyDirection;
+
   setAlwaysShowAnswers(value: boolean): void {
     this.preferences.update(preferences => ({
       ...preferences,
       alwaysShowAnswers: value
     }));
 
+    this.savePreferences();
+  }
+
+  private savePreferences(): void {
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(this.preferences())
     );
+  }
+
+  setStudyDirection(value: StudyDirection): void {
+    this.preferences.update(preferences => ({
+      ...preferences,
+      studyDirection: value
+    }));
+
+    this.savePreferences();
   }
 
   private loadPreferences(): StudyPreferences {
