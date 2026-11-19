@@ -35,4 +35,10 @@ public class Group {
 
     @OneToMany(mappedBy = "group", fetch = LAZY)
     private List<Flashcard> flashcards = new ArrayList<>();
+
+    @Column(name = "native_language_code", nullable = false, length = 35)
+    private String nativeLanguageCode;
+
+    @Column(name = "learning_language_code", nullable = false, length = 35)
+    private String learningLanguageCode;
 }

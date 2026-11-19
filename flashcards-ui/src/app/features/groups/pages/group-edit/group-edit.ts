@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Group } from '../../services/group';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupRequest } from '../../models/group-request';
+import { differentLanguageValidator } from '../../../../shared/validators/different-language.validator';
 
 @Component({
   selector: 'app-group-edit',
@@ -25,7 +26,12 @@ export class GroupEdit implements OnInit {
   groupId!: string;
 
   form = this.fb.nonNullable.group({
-    name: ['', Validators.required]
+    name: ['', Validators.required],
+    nativeLanguageCode: ['', Validators.required],
+    learningLanguageCode: ['', Validators.required]
+  },
+  {
+    validators: differentLanguageValidator
   });
 
   ngOnInit(): void {

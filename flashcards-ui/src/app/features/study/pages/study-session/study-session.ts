@@ -10,6 +10,10 @@ import { StudyPreferencesService } from '../../services/study-preferences/study-
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { StudyDirection } from '../../models/study-direction/study-direction.type';
+import { GroupResponse } from '../../../groups/models/group-response';
+import { LanguageResponse } from '../../../groups/models/language-response';
+import { Group } from '../../../groups/services/group';
+import { LanguageService } from '../../../groups/services/language.service';
 
 @Component({
   selector: 'app-study-session',
@@ -30,7 +34,11 @@ export class StudySession implements OnInit {
   private studyService = inject(Study);
   private readonly flashcardService = inject(Flashcard);
   private readonly studyPreferences = inject(StudyPreferencesService);
+  private readonly groupService = inject(Group);
+  private readonly languageService = inject(LanguageService);
 
+  readonly group = signal<GroupResponse | null>(null);
+  readonly languages = signal<LanguageResponse[]>([]);
   cards = signal<FlashcardResponse[]>([]);
   currentIndex = signal(0);
 
@@ -47,6 +55,20 @@ export class StudySession implements OnInit {
   readonly answerVisible = computed(
     () => this.alwaysShowAnswers() || this.answerRevealed()
   );
+
+  readonly nativeLanguageLabel = computed(() => {
+    const code = this.group()?.nativeLanguageCode;
+
+    return this.languages().find(language => language.code === code)
+      ?.nativeName ?? 'Native language';
+  });
+
+  readonly learningLanguageLabel = computed(() => {
+    const code = this.group()?.learningLanguageCode;
+
+    return this.languages().find(language => language.code === code)
+      ?.nativeName ?? 'Learning language';
+  });
 
   currentCard = computed(() => 
     this.cards()[this.currentIndex()]
@@ -78,14 +100,14 @@ export class StudySession implements OnInit {
 
   readonly questionLanguageLabel = computed(() =>
     this.studyDirection() === 'NATIVE_TO_LEARNING'
-      ? 'Lietuvių kalba'
-      : 'English language'
+      ? this.nativeLanguageLabel()
+      : this.learningLanguageLabel()
   );
 
   readonly answerLanguageLabel = computed(() =>
     this.studyDirection() === 'NATIVE_TO_LEARNING'
-      ? 'English language'
-      : 'Lietuvių kalba'
+      ? this.learningLanguageLabel()
+      : this.nativeLanguageLabel()
   );
 
   readonly questionWord = computed(() => {
@@ -116,6 +138,8 @@ export class StudySession implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get("id")!;
+    this.loadGroup();
+    this.loadLanguages();
     this.loadFlashcards();
   }
 
@@ -124,6 +148,20 @@ export class StudySession implements OnInit {
     this.studyService.getSession(this.groupId).subscribe({
       next: (result) => this.cards.set(result),
       error: (err) => console.log(err)
+    });
+  }
+
+  private loadGroup(): void {
+    this.groupService.getById(this.groupId).subscribe({
+      next: group => this.group.set(group),
+      error: error => console.error('Failed to load group: ', error)
+    });
+  }
+
+  private loadLanguages(): void {
+    this.languageService.getLanguages().subscribe({
+      next: languages => this.languages.set(languages),
+      error: error => console.error('Failed to load languages: ', error)
     });
   }
 

@@ -25,6 +25,52 @@
 
         <!-- <button type="submit">Submit</button> -->
 
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>
+                Native language
+            </mat-label>
+
+            <mat-select formControlName="nativeLanguageCode">
+                @for (language of languages(); track language.code) {
+                    <mat-option [value]="language.code">
+                        {{ language.nativeName }} ({{ language.englishName }})
+                    </mat-option>
+                }
+            </mat-select>
+
+            @if (form.controls.nativeLanguageCode.hasError('required') &&
+                form.controls.nativeLanguageCode.touched) {
+                <mat-error>Select a native language.</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>
+                Learning language
+            </mat-label>
+
+            <mat-select formControlName="learningLanguageCode">
+                @for (language of languages(); track language.code) {
+                    <mat-option [value]="language.code">
+                        {{ language.nativeName }} ({{ language.englishName }})
+                    </mat-option>
+                }
+            </mat-select>
+
+            @if (form.controls.learningLanguageCode.hasError('required') &&
+                form.controls.learningLanguageCode.touched) {
+                    <mat-error>Select a learning language.</mat-error>
+            }
+        </mat-form-field>
+
+        @if (form.hasError('sameLanguages') &&
+            (form.controls.nativeLanguageCode.touched ||
+            form.controls.learningLanguageCode.touched)) {
+                <p class="form-error">
+                    Native and learning languages must be different.
+                </p>
+            }
+
         <button
             mat-raised-button
             color="primary"

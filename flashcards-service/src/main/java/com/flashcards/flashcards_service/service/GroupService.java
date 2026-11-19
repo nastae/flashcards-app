@@ -5,6 +5,7 @@ import com.flashcards.flashcards_service.dto.GroupResponseDto;
 import com.flashcards.flashcards_service.entity.Group;
 import com.flashcards.flashcards_service.mapper.GroupMapper;
 import com.flashcards.flashcards_service.repository.GroupRepository;
+import com.flashcards.flashcards_service.repository.LanguageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,14 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
+    private final LanguageRepository languageRepository;
 
     public GroupResponseDto create(GroupRequestDto request) {
+        validateLanguages(request);
         Group group = new Group();
         group.setName(request.name());
+        group.setNativeLanguageCode(request.nativeLanguageCode());
+        group.setLearningLanguageCode(request.learningLanguageCode());
 
         Group saved = groupRepository.save(group);
 
@@ -46,10 +51,13 @@ public class GroupService {
 
 //    TODO: write specific exception to later handle it that wrong request data
     public GroupResponseDto update(Long id, GroupRequestDto request) {
+        validateLanguages(request);
         Group group = groupRepository.findById(id)
 //                .orElseThrow(() -> new RuntimeException("Group not found"));
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found"));
         group.setName(request.name());
+        group.setNativeLanguageCode(request.nativeLanguageCode());
+        group.setLearningLanguageCode(request.learningLanguageCode());
 
         Group updatedGroup = groupRepository.save(group);
 
@@ -62,5 +70,28 @@ public class GroupService {
 
         group.setDeleted(true);
         groupRepository.save(group);
+    }
+
+    private void validateLanguages(GroupRequestDto requestDto) {
+        if (requestDto.nativeLanguageCode().equalsIgnoreCase(requestDto.learningLanguageCode())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Native and learning languages must be different. Both are: " + requestDto.nativeLanguageCode()
+            );
+        }
+
+        if (!languageRepository.existsById(requestDto.nativeLanguageCode())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Unsupported native language: " + requestDto.nativeLanguageCode()
+            );
+        }
+
+        if (!languageRepository.existsById(requestDto.learningLanguageCode())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Unsupported learning language: " + requestDto.learningLanguageCode()
+            );
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.flashcards.flashcards_service.controller;
 import com.flashcards.flashcards_service.dto.GroupRequestDto;
 import com.flashcards.flashcards_service.dto.GroupResponseDto;
 import com.flashcards.flashcards_service.service.GroupService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,7 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping
-    public GroupResponseDto create(@RequestBody GroupRequestDto request) {
+    public GroupResponseDto create(@Valid @RequestBody GroupRequestDto request) {
         return groupService.create(request);
     }
 
@@ -44,7 +45,7 @@ public class GroupController {
 //      shows number of cards per group (better UX)
 
     @PutMapping("/{id}")
-    public GroupResponseDto update(@PathVariable Long id, @RequestBody GroupRequestDto request) {
+    public GroupResponseDto update(@PathVariable Long id, @Valid @RequestBody GroupRequestDto request) {
         return groupService.update(id, request);
     }
 

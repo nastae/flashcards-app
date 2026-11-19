@@ -3,17 +3,21 @@
 
     <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="submit(formDirective)" class="form">
         <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Front text</mat-label>
+            <mat-label>Word ({{ learningLanguageName() || 'Learning language' }})</mat-label>
             
             <input matInput formControlName="frontText"/>
 
+            <mat-hint>
+                Enter the word in {{ learningLanguageName() || 'your leaning language' }}
+            </mat-hint>
+
             @if (form.get("frontText")?.invalid && form.get("frontText")?.touched) {
-                <mat-error>Front text is required</mat-error>
+                <mat-error>Word is required</mat-error>
             }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width spacing-bottom">
-            <mat-label>Native word / translation</mat-label>
+            <mat-label>Native word / translation ({{ nativeLanguageName() || 'Native language' }})</mat-label>
 
             <input
                 matInput
@@ -22,17 +26,21 @@
             />
 
             <mat-hint>
-                The equivalent word in your native language (optional)
+                The equivalent word in ({{ nativeLanguageName() || 'your native language' }}) (optional)
             </mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Back text</mat-label>
+            <mat-label>Definition ({{ learningLanguageName() || 'Learning language' }})</mat-label>
 
             <textarea matInput rows="4" formControlName="backText"></textarea>
 
+            <mat-hint>
+                Add a definition or explanation in {{ learningLanguageName() || 'your learning language' }}
+            </mat-hint>
+
             @if (form.get("backText")?.invalid && form.get("backText")?.touched) {
-                <mat-error>Back text is required</mat-error>
+                <mat-error>Definition is required</mat-error>
             }
         </mat-form-field>
 

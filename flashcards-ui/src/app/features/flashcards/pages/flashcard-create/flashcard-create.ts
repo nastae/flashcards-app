@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -10,6 +10,9 @@ import { Flashcard } from '../../services/flashcard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CloudinaryService } from '../../../../shared/cloudinary.service';
+import { Group } from '../../../groups/services/group';
+import { LanguageService } from '../../../groups/services/language.service';
+import { catchError, EMPTY, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-flashcard-create',
@@ -24,8 +27,13 @@ export class FlashcardCreate implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cloudinaryService = inject(CloudinaryService);
+  private readonly groupService = inject(Group);
+  private readonly languageService = inject(LanguageService);
 
   private groupId!: string;
+
+  nativeLanguageName = signal('Native language');
+  learningLanguageName = signal('Learning language');
 
   form = this.fb.nonNullable.group({
     frontText: ['', Validators.required],
@@ -41,6 +49,48 @@ export class FlashcardCreate implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get("id")!;
+
+    this.loadGroupLanguages();
+  }
+
+  private loadGroupLanguages(): void {
+    forkJoin({
+      group: this.groupService.getById(this.groupId).pipe(
+        catchError(error => {
+          console.error('Failed to load group: ', error);
+          this.snackBar.open('Failed to load group.', 'Close', {
+            duration: 3000
+          })
+          return EMPTY;
+        })
+      ),
+      languages: this.languageService.getLanguages().pipe(
+        catchError(error => {
+          console.error('Failed to load languages: ', error);
+          this.snackBar.open('Failed to load languages.', 'Close', {
+            duration: 3000
+          })
+          return EMPTY;
+        })
+      )
+    }).subscribe({
+      next: ({group, languages}) => {
+        const nativeLanguage = languages.find(
+          language => language.code === group.nativeLanguageCode
+        );
+
+        const learningLanguage = languages.find(
+          language => language.code === group.learningLanguageCode
+        );
+
+        this.nativeLanguageName.set(
+          nativeLanguage?.nativeName ?? 'Native language'
+        );
+        this.learningLanguageName.set(
+          learningLanguage?.englishName ?? 'Learning language'
+        );
+      }
+    });
   }
 
   // TODO: make proper error handling

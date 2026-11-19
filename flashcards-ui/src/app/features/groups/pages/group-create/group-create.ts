@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { LanguageService } from './../../services/language.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Group } from '../../services/group';
 import { GroupRequest } from '../../models/group-request';
@@ -8,6 +9,9 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { LanguageResponse } from '../../models/language-response';
+import { differentLanguageValidator } from '../../../../shared/validators/different-language.validator';
 
 @Component({
   selector: 'app-group-create',
@@ -17,16 +21,19 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
     // MatFormField,
     // MatLabel,
     // MatInput,
     // MatError
+    MatSelectModule
   ],
   templateUrl: './group-create.html',
   styleUrl: './group-create.scss',
 })
-export class GroupCreate {
+export class GroupCreate implements OnInit {
+
+  readonly languages = signal<LanguageResponse[]>([]);
 
   // TODO: add creation logic and html
 
@@ -34,15 +41,33 @@ export class GroupCreate {
   private groupService = inject(Group);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
+  private readonly languageService = inject(LanguageService);
 
   form = this.fb.nonNullable.group({
-    name: ['', Validators.required]
+    name: ['', Validators.required],
+    nativeLanguageCode: ['', Validators.required],
+    learningLanguageCode: ['', Validators.required]
+  },
+  {
+    validators: differentLanguageValidator
   });
 
   successMessage = '';
   errorMessage = '';
 
   constructor() {}
+
+  ngOnInit(): void {
+    this.languageService.getLanguages().subscribe({
+      next: languages => this.languages.set(languages),
+      error: error => {
+        console.error('Failed to load languages: ', error);
+        this.snackBar.open('Failed to load languages', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+  }
 
   submit(formDirective: any) {
     if (this.form.invalid) {
