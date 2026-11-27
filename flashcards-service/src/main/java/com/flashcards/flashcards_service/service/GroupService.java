@@ -2,16 +2,25 @@ package com.flashcards.flashcards_service.service;
 
 import com.flashcards.flashcards_service.dto.GroupRequestDto;
 import com.flashcards.flashcards_service.dto.GroupResponseDto;
+import com.flashcards.flashcards_service.dto.quiz.ActiveQuizProjection;
+import com.flashcards.flashcards_service.dto.quiz.ActiveQuizResponseDto;
+import com.flashcards.flashcards_service.dto.quiz.GroupQuizCountProjection;
 import com.flashcards.flashcards_service.entity.Group;
+import com.flashcards.flashcards_service.enums.quiz.QuizSessionStatus;
 import com.flashcards.flashcards_service.mapper.GroupMapper;
+import com.flashcards.flashcards_service.mapper.quiz.QuizMapper;
+import com.flashcards.flashcards_service.repository.FlashcardRepository;
 import com.flashcards.flashcards_service.repository.GroupRepository;
 import com.flashcards.flashcards_service.repository.LanguageRepository;
+import com.flashcards.flashcards_service.repository.quiz.QuizSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +29,9 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
     private final LanguageRepository languageRepository;
+    private final FlashcardRepository flashcardRepository;
+    private final QuizSessionRepository quizSessionRepository;
+    private final QuizMapper quizMapper;
 
     public GroupResponseDto create(GroupRequestDto request) {
         validateLanguages(request);
@@ -43,9 +55,40 @@ public class GroupService {
     }
 
     public List<GroupResponseDto> getAll() {
-        return groupRepository.findByDeletedFalse()
+        List<Group> groups = groupRepository.findByDeletedFalse();
+
+        if (groups.isEmpty()) {
+            return List.of();
+        }
+
+        List<Long> groupIds = groups.stream()
+                .map(Group::getId)
+                .toList();
+
+        Map<Long, Long> quizCounts = flashcardRepository
+                .countQuizEligibleByGroupId(groupIds)
                 .stream()
-                .map(groupMapper::toResponseDto)
+                .collect(
+                        Collectors.toMap(
+                                GroupQuizCountProjection::getGroupId,
+                                GroupQuizCountProjection::getQuizEligibleCount
+                        )
+                );
+
+        Map<Long, ActiveQuizResponseDto> activeQuizzes = quizSessionRepository
+                .findActiveQuizzes(groupIds, QuizSessionStatus.IN_PROGRESS)
+                .stream()
+                .collect(Collectors.toMap(
+                        ActiveQuizProjection::getGroupId,
+                        quizMapper::toQuizResponseDto
+                ));
+
+        return groups.stream()
+                .map(group -> groupMapper.toResponseDto(
+                        group,
+                        quizCounts.getOrDefault(group.getId(), 0L),
+                        activeQuizzes.get(group.getId())
+                ))
                 .toList();
     }
 

@@ -1,6 +1,7 @@
 package com.flashcards.flashcards_service.mapper;
 
 import com.flashcards.flashcards_service.dto.GroupResponseDto;
+import com.flashcards.flashcards_service.dto.quiz.ActiveQuizResponseDto;
 import com.flashcards.flashcards_service.entity.Group;
 import org.mapstruct.Mapper;
 
@@ -8,4 +9,6 @@ import org.mapstruct.Mapper;
 public interface GroupMapper {
 
     GroupResponseDto toResponseDto(Group group);
+
+    GroupResponseDto toResponseDto(Group group, Long quizEligibleCount, ActiveQuizResponseDto activeQuiz);
 }

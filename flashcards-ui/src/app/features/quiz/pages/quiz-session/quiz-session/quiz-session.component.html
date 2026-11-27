@@ -1,0 +1,161 @@
+<div class="container">
+
+    @if (loading()) {
+        <p>Loading quiz...</p>
+    } @else if (errorMessage()) {
+        <mat-card class="result-card">
+            <h2>Quiz unavailable</h2>
+            <p>{{ errorMessage() }}</p>
+            
+            <button
+                mat-raised-button 
+                color="primary"
+                (click)="backToStudy()"
+            >
+                Back to study page
+            </button>
+        </mat-card>
+    } @else if (showResult() && result(); as quizResult) {
+        <mat-card class="result-card">
+            <h2>Quiz completed</h2>
+
+            <div class="result-score">
+                {{ quizResult.correctAnswers }} / {{ quizResult.totalQuestions }}
+            </div>
+
+            <p>
+                You answered {{ quizResult.correctAnswers }} out of 
+                {{ quizResult.totalQuestions }} questions correctly.
+            </p>
+
+            <p class="percentage">
+                {{ quizResult.percentage }}%
+            </p>
+
+            <div class="result-actions">
+                <button
+                    mat-stroked-button 
+                    (click)="finishQuiz()"
+                >
+                    Finish
+                </button>
+
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="restartQuiz()"
+                >
+                    Try again
+                </button>
+            </div>
+        </mat-card>
+    } @else if (currentQuestion(); as question) {
+
+        <div class="quiz-header">
+            <span>
+                Question {{ question.number }} of {{ totalQuestions() }}
+            </span>
+
+            <span>
+                Score: {{ score() }}
+            </span>
+        </div>
+
+        <mat-progress-bar
+            mode="determinate"
+            [value]="progress()"
+        />
+
+        <mat-card class="quiz-card">
+            <h2>Which card matches?</h2>
+
+            @if (question.imageUrl) {
+                <img
+                    [src]="question.imageUrl"
+                    alt="Quiz question"
+                    class="question-image"
+                />
+            }
+
+            @if (question.definition) {
+                <div class="definition">
+                    {{ question.definition }}
+                </div>
+            }
+
+            <div class="options">
+                @for (option of question.options; track option.flashcardId) {
+                    <button
+                        mat-stroked-button
+                        type="button"
+                        class="option-button"
+                        [class.correct]="isOptionCorrect(option)"
+                        [class.incorrect]="isOptionIncorrect(option)"
+                        [disabled]="answered() || submitting()"
+                        (click)="selectAnswer(option)"
+                    >
+                        <span>
+                            {{ option.text }}
+                        </span>
+
+                        @if (isOptionCorrect(option)) {
+                            <span class="option-icon">✓</span>
+                        }
+
+                        @if (isOptionIncorrect(option)) {
+                            <span class="option-icon">✕</span>
+                        }
+                    </button>
+                }
+            </div>
+
+            @if (submitting()) {
+                <p role="status">Checking your answer...</p>
+            }
+            
+            @if (answerResult(); as answer) {
+                <div
+                    class="feedback"
+                    [class.feedback-correct]="answer.isCorrect"
+                    [class.feedback-incorrect]="!answer.isCorrect"
+                >
+                    @if (answer.isCorrect) {
+                        <strong>Correct! well done.</strong>
+                    } @else {
+                        <strong>Not quite!</strong>
+
+                        <p>
+                            The correct answer is 
+                            {{ answer.correctAnswer }}
+                        </p>
+                    }
+                </div>
+            }
+
+        </mat-card>
+
+        @if (answered()) {
+            <div class="quiz-actions">
+                @if (answerResult()?.quizCompleted) {
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        (click)="showQuizResult()"
+                    >
+                        Show result
+                    </button>
+                } @else {
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        [disabled]="movingNext()"
+                        (click)="nextQuestion()"
+                    >
+                        Next question
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                }
+            </div>
+        }
+    }
+</div>

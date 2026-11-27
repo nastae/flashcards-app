@@ -16,9 +16,47 @@
                             <h3>{{ group.name }}</h3>
                         </div>
 
-                        <button mat-raised-button color="primary" (click)="startStudy(group.id)">
-                            Start
-                        </button>
+                        <div class="card-actions">
+                            <button 
+                                mat-raised-button 
+                                color="primary" 
+                                (click)="startStudy(group.id)"
+                            >
+                                Start study
+                            </button>
+
+                            @if (group.activeQuiz; as quizActive) {
+                                <button
+                                    mat-stroked-button
+                                    color="primary"
+                                    (click)="continueQuiz(group.id, quizActive.sessionId)"
+                                >
+                                    Continue quiz
+                                </button>
+                            } @else {
+                                <button 
+                                mat-stroked-button
+                                color="primary"
+                                [disabled]="group.quizEligibleCount < 4"
+                                (click)="startQuiz(group.id)"
+                            >
+                                Start quiz
+                            </button>
+                            }
+                        </div>
+
+                        @if (group.activeQuiz; as quizActive) {
+                            <p class="quiz-hint">
+                                {{ quizActive.totalQuestions - quizActive.currentQuestionNumber + 1 }} 
+                                questions left to finish your quiz.
+                            </p>
+                        } @else if (group.quizEligibleCount < 4) {
+                            <p class="quiz-hint">
+                                Add 
+                                {{ 4 - group.quizEligibleCount }} 
+                                more different word(s) to unlock the quiz.
+                            </p>
+                        }
                     </div>
                 </mat-card>
             }

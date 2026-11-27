@@ -1,8 +1,10 @@
 .container {
-    width: 400px;
+    width: 100%;
+    max-width: 480px;
     padding: 16px;
     margin: 0 auto;
     // padding-bottom: 90px;
+    box-sizing: border-box;
 }
 
 .list {
@@ -18,9 +20,8 @@
 
 .card-content {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .card-title {
@@ -43,4 +44,27 @@ h3 {
     margin: 0;
 }
 
+.card-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.card-actions button {
+    width: 100%;
+    min-width: 0;
+}
+
+.quiz-hint {
+    margin: 8px 0 0;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-small);
+}
+
 // TODO: add mobile version
+
+@media (max-width: 410px) {
+    .card-actions {
+        grid-template-columns: 1fr;
+    }
+}

@@ -6,6 +6,7 @@ import { GroupEdit } from './features/groups/pages/group-edit/group-edit';
 import { FlashcardCreate } from './features/flashcards/pages/flashcard-create/flashcard-create';
 import { StudyList } from './features/study/pages/study-list/study-list';
 import { StudySession } from './features/study/pages/study-session/study-session';
+import { QuizSessionComponent } from './features/quiz/pages/quiz-session/quiz-session/quiz-session.component';
 
 export const routes: Routes = [
     {
@@ -33,12 +34,18 @@ export const routes: Routes = [
         path: 'groups/:id/flashcards/create',
         component: FlashcardCreate
     },
+    // TODO: update to /groups/study
     {
         path: 'study',
         component: StudyList
     },
+    // TODO: update to /groups/:id/study
     {
         path: 'study/:id',
         component: StudySession
+    },
+    {
+        path: 'groups/:id/sessions/:sessionId/quiz',
+        component: QuizSessionComponent
     }
 ];
